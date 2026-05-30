@@ -1,6 +1,6 @@
 # PerDiemMenu
 
-React Native (no Expo) mobile menu browser for the Per Diem take-home. Connects to [`perdiem-menu-api`](../perdiem-menu-api) to display Square catalog items by location, with timezone-aware time/day availability, category filters, modifiers, cart, and inventory state.
+React Native mobile menu browser for the Per Diem take-home. Connects to [`perdiem-menu-api`](../perdiem-menu-api) to display Square catalog items by location, with timezone-aware time/day availability, category filters, modifiers, cart, and inventory state.
 
 ---
 
@@ -71,7 +71,7 @@ This is a deliberate product decision: hiding items entirely creates confusion (
 
 ### Cart is location-scoped
 
-Adding an item from a different location automatically clears the cart. This matches real food-ordering app behavior and prevents mixed-location orders.
+Selecting a different location immediately clears the cart. This happens at the point of location selection (not deferred until the next item add) so a guest can never accidentally submit a mixed-location order. Matches DoorDash / Uber Eats behavior.
 
 ### Inventory is best-effort
 
