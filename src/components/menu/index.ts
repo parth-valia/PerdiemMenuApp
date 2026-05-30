@@ -1,4 +1,9 @@
 export { default as CategoryPill } from './CategoryPill';
+export { default as ItemDetailCTA } from './ItemDetailCTA';
+export { default as ItemHero } from './ItemHero';
 export { default as MenuCard } from './MenuCard';
+export { default as MenuFilterBar } from './MenuFilterBar';
+export { default as MenuHeader } from './MenuHeader';
+export { default as MenuSearchBar } from './MenuSearchBar';
 export { default as ModifierSection } from './ModifierSection';
 export { default as VariationSelector } from './VariationSelector';

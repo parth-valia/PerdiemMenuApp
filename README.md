@@ -1,6 +1,6 @@
 # PerDiemMenu
 
-React Native (no Expo) mobile menu browser for the Per Diem take-home challenge.
+React Native mobile menu browser for the Per Diem take-home challenge.
 
 Connects to [`perdiem-menu-api`](../perdiem-menu-api) to display Square catalog items by location. Core features: location switcher, category filter pills, item detail with variations and modifiers, full-text search, cart with subtotal, timezone-aware time/day availability, and out-of-stock surfacing via the Inventory API.
 
@@ -86,13 +86,13 @@ Subtotal is computed in integer cents across the entire cart and formatted only 
 
 ### Inventory is best-effort
 
-If the Inventory API call fails the menu still loads. Variations default to `inStock: true` when the backend cannot confirm stock. The real stock check happens at order submission; a best-effort display is better than blocking the menu on an upstream hiccup.
+If the Inventory API call fails the menu still loads. Variations default to `inStock: true` when the backend cannot confirm stock. The real stock check happens at order submission a best-effort display is better than blocking the menu on an upstream hiccup.
 
 ### Component and screen separation
 
 Screens own: data fetching (RTK Query hooks), navigation handlers, Redux dispatch calls, and top-level layout assembly.
 
-Components own: rendering logic, local styles, and their own `StyleSheet`. No component imports from a screen's `styles.ts`; each component carries its own styles.
+Components own: rendering logic, local styles, and their own `StyleSheet`. No component imports from a screen's `styles.ts` each component carries its own styles.
 
 ---
 
@@ -145,4 +145,4 @@ src/
 2. **Search debouncing** — debounce at ~200 ms to reduce Redux updates per keystroke
 3. **Image caching** — react-native-fast-image with disk cache so hero images don't re-download on scroll
 4. **Optimistic UI for cart** — instant feedback before the Redux state update settles
-5. **Unit tests for selectors** — `selectFilteredItems` and `selectCartSubtotalCents` are pure functions; easy to test and high value
+5. **Unit tests for selectors** — `selectFilteredItems` and `selectCartSubtotalCents` are pure functions easy to test and high value

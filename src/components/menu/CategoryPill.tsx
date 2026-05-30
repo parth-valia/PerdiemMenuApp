@@ -5,16 +5,10 @@ import { Colors, Spacing, Radius } from '@/theme';
 interface Props {
   label: string;
   isActive: boolean;
-  isAvailable: boolean;
   onPress: () => void;
 }
 
-const CategoryPill: React.FC<Props> = ({
-  label,
-  isActive,
-  isAvailable,
-  onPress,
-}) => {
+const CategoryPill: React.FC<Props> = ({ label, isActive, onPress }) => {
   if (isActive) {
     return (
       <TouchableOpacity
@@ -22,14 +16,7 @@ const CategoryPill: React.FC<Props> = ({
         onPress={onPress}
         activeOpacity={0.85}
       >
-        {/* <LinearGradient
-          colors={['#FBBC00', '#FFBF00', '#E5A800']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.pill}
-        > */}
         <Text style={styles.labelActive}>{label}</Text>
-        {/* </LinearGradient> */}
       </TouchableOpacity>
     );
   }
@@ -38,11 +25,7 @@ const CategoryPill: React.FC<Props> = ({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      style={[
-        styles.pill,
-        styles.pillInactive,
-        !isAvailable && styles.pillUnavailable,
-      ]}
+      style={[styles.pill, styles.pillInactive]}
     >
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
@@ -80,7 +63,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 1,
   },
-  pillUnavailable: { opacity: 0.38 },
   labelActive: {
     fontSize: 13,
     fontWeight: '700',
@@ -92,6 +74,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: Colors.textSecondary,
     letterSpacing: 0.1,
+  },
+  labelUnavailable: {
+    color: Colors.textTertiary,
   },
 });
 

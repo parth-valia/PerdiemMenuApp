@@ -22,9 +22,8 @@ const MenuCard: React.FC<Props> = ({ item, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.92}
+      activeOpacity={0.85}
       style={[styles.card, isUnavailable && styles.cardUnavailable]}
-      disabled={isUnavailable}
     >
       {/* ── Food image ─────────────────────────────────────────────────── */}
       <View style={styles.imageContainer}>
@@ -44,10 +43,10 @@ const MenuCard: React.FC<Props> = ({ item, onPress }) => {
           </View>
         )}
 
-        {isUnavailable && item.availabilityReason && (
+        {isUnavailable && (
           <View style={styles.badgeTopLeft}>
             <StatusBadge
-              label={`⏰ ${item.availabilityReason}`}
+              label={`⏰ ${item.availabilityReason ?? 'Not available now'}`}
               variant="warning"
             />
           </View>

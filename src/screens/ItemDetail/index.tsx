@@ -1,13 +1,17 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import { useAppDispatch, useAppSelector } from '@/hooks/useAppDispatch';
 import { addItem } from '@/store/slices/cartSlice';
 import { selectItemById } from '@/store/selectors';
-import { VariationSelector, ModifierSection } from '@/components/menu';
-import { ItemImage } from '@/components/common';
+import {
+  ItemHero,
+  ItemDetailCTA,
+  VariationSelector,
+  ModifierSection,
+} from '@/components/menu';
 import { formatCents } from '@/utils/currency';
+import { Colors, Typography } from '@/theme';
 import type { ItemVariation, SelectedModifier, Money } from '@/types';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@/navigation/RootNavigator';
@@ -100,8 +104,8 @@ const ItemDetailScreen: React.FC<Props> = ({ route, navigation }) => {
 
   if (!item) {
     return (
-      <View style={styles.notFound}>
-        <Text style={styles.notFoundText}>Item not found</Text>
+      <View style={notFoundStyles.container}>
+        <Text style={notFoundStyles.text}>Item not found</Text>
       </View>
     );
   }
@@ -113,35 +117,12 @@ const ItemDetailScreen: React.FC<Props> = ({ route, navigation }) => {
         bounces
         style={styles.container}
       >
-        <View style={styles.heroContainer}>
-          <ItemImage
-            uri={item.imageUrl}
-            containerStyle={styles.heroImage}
-            placeholderEmojiSize={72}
-          />
-          <LinearGradient
-            colors={['rgba(26,10,0,0.8)', 'transparent']}
-            start={{ x: 0, y: 1 }}
-            end={{ x: 0, y: 0 }}
-            style={styles.heroGradient}
-          />
-
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backIcon}>←</Text>
-          </TouchableOpacity>
-
-          {!item.availableNow && (
-            <View style={styles.unavailableOverlay}>
-              <Text style={styles.unavailableOverlayText}>⏰</Text>
-              <Text style={styles.unavailableOverlayLabel}>
-                {item.availabilityReason ?? 'Not available right now'}
-              </Text>
-            </View>
-          )}
-        </View>
+        <ItemHero
+          imageUrl={item.imageUrl}
+          availableNow={item.availableNow}
+          availabilityReason={item.availabilityReason}
+          onBack={() => navigation.goBack()}
+        />
 
         <View style={styles.infoContainer}>
           <View style={styles.infoHeader}>
@@ -186,19 +167,24 @@ const ItemDetailScreen: React.FC<Props> = ({ route, navigation }) => {
       </ScrollView>
 
       {item.availableNow && (
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity
-            style={styles.ctaButton}
-            onPress={handleAddToCart}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.ctaText}>Add to order</Text>
-            <Text style={styles.ctaPrice}>{totalFormatted}</Text>
-          </TouchableOpacity>
-        </View>
+        <ItemDetailCTA
+          totalFormatted={totalFormatted}
+          onAddToCart={handleAddToCart}
+        />
       )}
     </SafeAreaView>
   );
 };
+
+// Isolated not-found style — not part of the main screen layout
+const notFoundStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.bg,
+  },
+  text: { ...Typography.h3, color: Colors.textSecondary },
+});
 
 export default ItemDetailScreen;
